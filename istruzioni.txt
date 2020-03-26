@@ -1,0 +1,92 @@
+
+---- Modificare Dump_v2 e calcolare media e rms della massa invariante ----
+
+Il file contiene i dati corrispondenti agli aventi con diverse particelle
+che decadono (K0 e Lambda0), più gli eventi di fondo; gli eventi significativi
+hanno esattamente due particelle, una positiva e una negativa.
+Calcolare media e rms della massa invariante selezionando gli eventi 
+significativi con massa compresa tra 0.490 e 0.505 GeV/c^2.
+
+La rms della massa invariante è calcolata dalla differenza di numeri molto
+vicini tra loro (quadrato delle somma e somma dei quadrati), quindi la precisione
+limitata ha effetti non trascurabili. Per risolvere questi problemi appicare una
+o entrambe le seguenti:
+- usare variabili in doppia precisione per le somme delle masse, le medie e le rms,
+  cosi come per tutti i calcoli,
+- sottrarre la massa invariante minima (cioè 0.490) da ogni massa calcolata evento
+  per evento, prima di aggiornare le somme, e aggiungerle di nuovo alla media dopo
+  tutti i calcoli.
+
+Aggiungere quattro funzioni come descritto qui sotto.
+
+***
+Creare due funzioni per calcolare energia o massa invariante dalle componenti
+x, y, z del momento più la massa invariante o l'energia, rispettivamente.
+Entrambe le funzioni prendono 4 argomenti: la prima prende le 3 componenti del
+momento più la massa invariante e restituisce l'energia, la seconda prende le 
+3 componenti del momento più l'energia e restituisce la massa invariante.
+
+***
+Creare una funzione "mass" che prende come argomento una reference a un const-Event
+e restituisce la massa invariante delle particelle che decadono.
+Usare le seguenti variabili:
+- 2 variabili   int per contare le particelle positive e negative,
+- 3 variabili float per le 3 somme delle componenti del momento,
+- 2 variabili float per le somme dell'energia totale, per l'ipotesi di un 
+  decadimento di K0 o Lambda0.
+Usare un typedef per dichiarare i pointer alle strutture const-Particle.
+Fare un ciclo sulle particelle, e per ognuna:
+- incrementare il counter corrispondente, in accordo con la carica,
+- incrementare le somme delle 3 componenti del momento,
+- calcolare l'energia della particella per  l'ipotesi del decadimento di K0,
+  usando la funzione descritta sopra e passando come argomenti le 3 componenti
+  del momento e la massa del pione,
+- calcolare l'energia delle particella nell'ipotesi del decadimento Lambda0,
+  usando la funzione descritta sopra e passando come argomenti le 3 componenti
+  del momento e la massa del pione per una particella negativa o la massa del 
+  protone per una particella positiva,
+- aggiorna la somma dell'energia totale per entrambe le ipotesi K0 e Lambda0.
+Controllare il numero di particelle positive e restituire un valore negativo
+(non fisico) se sono uno diverso dall'altro.
+Calcolare la massa invariante per entrambe le ipotesi K0 e Lambda0, e calcolare
+la differenza per ognuna con le masse conoscute di K0 e Lambda0 rispettivamente.
+Restituire la massa invariante per cui la differenza corrispondente è minore.
+
+***
+Creare una funzione "add" che prende come argomenti:
+- una referenza a un const-Event,
+- due referenze a double per la somma delle masse invarianti
+  e la somma dei quadrati,
+Dentro la funzione calcolare la massa invariante delle particelle che decadono
+usando la funzione "mass" descritta sopra.
+Se la masssa è copresa tra il minimo e il massimo incrementare le somme delle 
+masse e i quadrati, altrimenti lasciare le somme invariate.
+Restituire true o false, rispettivamente se la massa era in range o no.
+Se scegli di sottrarre la massa minima evento per evento, usare lo stesso
+parametro usato per selezionare gli eventi dentro il range delle masse.
+
+***
+Modificare la funzione main come segue.
+Aggiungere 5 variabili:
+- una che contiene il numero di eventi accettati,
+- una che contiene la somma delle masse invarianti,
+- una che contiene la somma dei quadrati delle masse invarianti,
+- una che contiene la media della massa invariante,
+- una che contiene la rms   della massa invariante.
+In ogni ciclo sugli eventi chiamare la funzione "add", usando 0.490 e 0.505
+come massa invariante minima e massima; disabilitare la chiamata della funzione
+"dump" con "//", se si preferisce.
+Calcolare il numero di eventi incrementando il contantore in accordo con il 
+valore di ritorno della funzione "add".
+Calcolare la media e la rms della massa dalla somma delle masse e i quadrati 
+e stampare il risultato sullo schermo.
+
+********* lista finale dei file/funzioni *********
+
+main                   modify Dump_v2
+struct Event           copy   Dump_v2
+read                   copy   Dump_v2
+clear                  copy   Dump_v2
+dump                   copy   Dump_v2
+mass                   to complete
+add                    to do
