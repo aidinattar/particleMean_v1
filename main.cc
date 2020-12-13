@@ -32,13 +32,14 @@ int main( int argc, char* argv[] ) {
 
     // loop over events
     while( ( ev = read( file ) ) != 0 ){
+
         if ( add( *ev, massMin, massMax,
-                  sum, sqr) ) ++n;
+                  sum, sqr ) ) ++n;
     //    dump( *ev );
         clear( ev );
         }
 
-    stat ( n, sum, sqr, mea, rms);
+    stat ( n, sum, sqr, mea, rms );
 
     std::cout << n << ' ' << mea + massMin << ' ' << rms << std::endl;
 
